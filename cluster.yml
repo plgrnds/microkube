@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  gather_facts: False
+  roles:
+  - { role: bastion-ssh-config, tags: ["localhost", "bastion"] }
+
+- hosts: k8s-cluster
+  gather_facts: True
+  pre_tasks:
+    - name: gather facts from all instances
+      setup:
+      delegate_to: "{{item}}"
+      delegate_facts: True
+      with_items: "{{ groups['k8s-cluster'] }}"
+  tasks:
+    - debug:
+        var: hostvars[inventory_hostname]
+
+- hosts: k8s-cluster
+  become: yes
+  gather_facts: False
+  roles:
+  - { role: k8s-node, tags: ["bootstrap"]}
+
+- hosts: k8s-master
+  gather_facts: False
+  roles:
+  - { role: k8s-master, tags: ["bootstrap"]}
+
+- hosts: k8s-minion
+  gather_facts: False
+  roles:
+  - { role: k8s-minion, tags: ["bootstrap"]}
+
+

@@ -1,0 +1,14 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Install kubernetes master tools
+  import_tasks: master.yml
+  tags: bootstrap
+
+- name: Install helm dependency manager
+  import_tasks: helm.yml
+  tags: helm
+
+- name: Install kubernetes console
+  import_tasks: console.yml
+  tags: console

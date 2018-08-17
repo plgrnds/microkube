@@ -1,0 +1,8 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: create kubernetes console
+  shell: kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+  args:
+    chdir: $HOME
+    creates: console_initialized.txt
