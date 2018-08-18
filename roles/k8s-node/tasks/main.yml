@@ -1,2 +1,11 @@
-- import_tasks: initial.yml
-- import_tasks: kubernetes.yml
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Setup {{ k8user }}
+  import_tasks: users.yml
+  tags: bootstrap
+
+- name: Install Kubernetes
+  import_tasks: kubernetes.yml
+  become: yes
+  tags: bootstrap

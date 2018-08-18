@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "cache": true,
+        "*.retry": true,
+        "ssh.conf": true,
+        ".local": true
+    }
+}

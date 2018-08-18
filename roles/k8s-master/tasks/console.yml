@@ -2,7 +2,25 @@
 # This playbook contains common plays that will be run on all nodes.
 
 - name: create kubernetes console
-  shell: kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+  become: yes
+  become_user: "{{ k8user }}"
+  shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
   args:
     chdir: $HOME
     creates: console_initialized.txt
+
+- name: obtain client certificate for accessing console
+  become: yes
+  become_user: "{{ k8user }}"
+  block:
+    - shell: 
+        grep 'client-certificate-data' $HOME/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.crt &&
+        grep 'client-key-data' $HOME/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.key &&
+        openssl pkcs12 -export -clcerts -inkey kubecfg.key -in kubecfg.crt -out kubecfg.p12 -name "kubernetes-client"
+      args:
+        chdir: $HOME
+        creates: kubecfg.p12
+    - fetch:
+        src: $HOME/kubecfg.p12
+        dest: artifacts/kubecfg.p12
+        flat: yes

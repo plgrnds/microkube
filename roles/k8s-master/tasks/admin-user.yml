@@ -1,0 +1,22 @@
+- name: Admin user
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "{{ k8s_addons_dir }}/{{ item }}"
+  with_items:
+    - admin-user.yaml
+
+- name: Create admin user
+  become: yes
+  become_user: "{{ k8user }}"
+  command: kubectl apply -f "{{ k8s_addons_dir }}/admin-user.yaml"
+
+- name: Get token
+  become: yes
+  become_user: "{{ k8user }}"
+  block:
+    - shell: "kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep {{ k8admin }} | awk '{print $1}') | awk '/^token/ {print}'"
+      register: admin_token
+    - set_fact: admin_token="{{admin_token.stdout}}"
+    - debug:
+        msg: "Admin token is {{ admin_token }}"

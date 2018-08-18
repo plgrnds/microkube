@@ -1,0 +1,8 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Configure host information
+  import_tasks: hosts.yml
+
+- name: Configure bastion connection
+  import_tasks: bastion.yml

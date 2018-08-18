@@ -1,0 +1,24 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: install kubectl
+  become: yes
+  apt:
+    name: kubectl
+    state: present
+
+- name: copy admin.conf to user's kube config
+  become: yes
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: "/home/{{ k8user }}/.kube/config"
+    remote_src: yes
+    owner: "{{ k8user }}"
+
+- name: install Pod network
+  become: yes
+  become_user: '{{ k8user }}'
+  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml >> pod_network_setup.txt
+  args:
+    chdir: $HOME
+    creates: pod_network_setup.txt

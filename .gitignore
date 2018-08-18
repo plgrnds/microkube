@@ -1,2 +1,4 @@
 ssh.conf
 *.retry
+cache
+.local

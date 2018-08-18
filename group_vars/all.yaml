@@ -1,0 +1,6 @@
+k8user: kube
+k8admin: kbhit
+helm_home: /opt/helm
+helm_archive: https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
+k8s_conf_dir: /etc/kubernetes
+k8s_addons_dir: '{{ k8s_conf_dir }}/addons'

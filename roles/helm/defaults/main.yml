@@ -1,0 +1,7 @@
+---
+# Helm package manager version
+helm_version: 2.10.0
+
+# Helm Tiller image
+k8s_helm_tiller_image: gcr.io/kubernetes-helm/tiller
+k8s_helm_tiller_image_tag: v{{ helm_version }}

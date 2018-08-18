@@ -1,0 +1,43 @@
+---
+- name: Check addons directories
+  become: yes
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: 0755
+  with_items:
+    - '{{ k8s_addons_dir }}'
+
+- name: Helm tiller
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "{{ k8s_addons_dir }}/{{ item }}"
+  with_items:
+    - helm-tiller.yaml
+
+- name: Deploy Tiller
+  become: yes
+  become_user: "{{ k8user }}"
+  command: kubectl apply -f "{{ k8s_addons_dir }}/helm-tiller.yaml"
+
+- name: Helm client
+  become: yes
+  unarchive:
+    src: https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz
+    dest: /usr/local/bin
+    creates: /usr/local/bin/helm
+    remote_src: yes
+    list_files: true
+    exclude:
+      - LICENSE
+      - README.md
+    extra_opts:
+      - --strip-components=1
+
+- name: Init helm
+  become: yes
+  become_user: "{{ k8user }}"
+  command: helm init --service-account tiller --upgrade
+  args:
+    creates: $HOME/.helm

@@ -1,0 +1,24 @@
+- name: create the '{{ k8user }}' user
+  become: yes
+  user: name="{{ k8user }}" append=yes state=present createhome=yes shell=/bin/bash
+
+- name: allow '{{ k8user }}' to have passwordless sudo
+  become: yes
+  lineinfile:
+    dest: /etc/sudoers
+    line: '{{ k8user }} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: set up authorized keys for the '{{ k8user }}' user
+  become: yes
+  authorized_key: user="{{ k8user }}" key="{{item}}"
+  with_file:
+  - ~/.ssh/id_rsa.pub
+
+- name: create .kube directory
+  become: yes
+  become_user: "{{ k8user }}"
+  file:
+    path: $HOME/.kube
+    state: directory
+    mode: 0755
