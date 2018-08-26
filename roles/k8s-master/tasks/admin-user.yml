@@ -14,6 +14,8 @@
 - name: Get token
   become: yes
   become_user: "{{ k8user }}"
+  tags:
+    - login
   block:
     - shell: "kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep {{ k8admin }} | awk '{print $1}') | awk '/^token/ {print}'"
       register: admin_token
