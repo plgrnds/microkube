@@ -1,13 +1,4 @@
 ---
-- name: Check addons directories
-  become: yes
-  file:
-    path: '{{ item }}'
-    state: directory
-    mode: 0755
-  with_items:
-    - '{{ k8s_addons_dir }}'
-
 - name: Helm tiller
   become: yes
   template:

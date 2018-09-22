@@ -3,7 +3,7 @@
 
 - name: initialize the cluster
   become: yes
-  shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+  shell: kubeadm init --pod-network-cidr=192.168.0.0/16 >> cluster_initialized.txt
   args:
     chdir: $HOME
     creates: cluster_initialized.txt
@@ -16,3 +16,12 @@
 - name: set join command
   set_fact:
     join_command: "{{ join_command_raw.stdout_lines[0] }}"
+
+- name: check addons directories
+  become: yes
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: 0755
+  with_items:
+    - '{{ k8s_addons_dir }}'
