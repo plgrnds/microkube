@@ -1,0 +1,5 @@
+---
+- hosts: k8s-minion
+  gather_facts: False
+  roles:
+  - k8s-minion

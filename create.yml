@@ -1,9 +1,5 @@
 ---
-- hosts: localhost
-  gather_facts: False
-  roles:
-  - { role: configure }
-  - { role: ansible, tags: ["bootstrap"]}
+
 
 # - hosts: k8s-cluster
 #   gather_facts: True
@@ -17,16 +13,16 @@
 #     - debug:
 #         var: hostvars[inventory_hostname]
 
-- hosts: k8s-cluster
-  gather_facts: False
-  roles:
-  - { role: k8s-node, tags: ["bootstrap"]}
+# - hosts: etcd
+#   become: true
+#   roles:
+#   - role: etcd
+#     etcd_hosts: '{{ groups["etcd"] }}'
 
-- hosts: k8s-master
-  gather_facts: False
-  roles:
-  - { role: k8s-master, tags: ["bootstrap"]}
-  - { role: helm, tags: ["bootstrap"]}
+
+
+
+
 
 - hosts: k8s-minion
   gather_facts: False

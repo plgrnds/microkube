@@ -1,0 +1,6 @@
+---
+- hosts: k8s-master
+  gather_facts: False
+  roles:
+  - role: dashboard
+    k8s_master_hosts: '{{ groups["k8s-master"] }}'

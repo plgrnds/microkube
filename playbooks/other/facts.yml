@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: True
+  pre_tasks:
+    - name: gather facts from all instances
+      setup:
+      delegate_to: "{{item}}"
+      delegate_facts: True
+      with_items: "{{ groups['all'] }}"
+  tasks:
+    - debug:
+        var: hostvars[inventory_hostname]

@@ -1,0 +1,3 @@
+---
+- import_playbook: localhost/setup.yml
+- import_playbook: other/facts.yml

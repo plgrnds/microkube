@@ -1,0 +1,7 @@
+---
+- hosts:
+    - all
+  remote_user: '{{ k8user }}'
+  become: true
+  roles:
+    - toolchain

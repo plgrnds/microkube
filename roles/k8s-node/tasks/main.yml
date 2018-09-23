@@ -3,9 +3,8 @@
 
 - name: Setup {{ k8user }}
   import_tasks: users.yml
-  tags: bootstrap
 
 - name: Install Kubernetes
   import_tasks: kubernetes.yml
   become: yes
-  tags: bootstrap
+

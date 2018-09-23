@@ -1,0 +1,25 @@
+---
+- name: Get calicoctl
+  become: yes
+  get_url:
+    url: "https://github.com/projectcalico/calicoctl/releases/download/v{{ k8s_calicoctl_version }}/calicoctl"
+    dest: "{{ k8s_bin_dir }}/calicoctl"
+    mode: 0755
+    force: yes
+  tags: networking
+
+- name: copy calico resource config
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "{{ k8s_addons_dir }}/{{ item }}"
+  with_items:
+    - calico-config.yaml
+
+- name: apply calico config
+  become: yes
+  become_user: "{{ k8user }}"
+  command: kubectl apply -f "{{ k8s_addons_dir }}/calico-config.yaml"
+  args:
+    chdir: $HOME
+    creates: calico_pod_network_setup.txt

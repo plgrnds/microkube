@@ -1,18 +1,16 @@
 ---
-# This playbook contains common plays that will be run on all nodes.
-
 - name: Set up the cluster
   import_tasks: cluster.yml
-  tags: bootstrap
 
 - name: Setup kubernetes client
   import_tasks: client.yml
-  tags: bootstrap
+
+- name: Setup container networking
+  import_tasks: networking.yml
+  tags: networking
 
 - name: Setup kubernetes console
   import_tasks: console.yml
-  tags: bootstrap
 
 - name: Create admin user
   import_tasks: admin-user.yml
-  tags: bootstrap

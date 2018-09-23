@@ -1,26 +1,13 @@
-- name: Ensure Python 3 tools are installed
-  homebrew:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - python
+- name: Make sure Python is installed
+  import_tasks: python.yml
 
-- name: Determine running python version
-  block:
-    - command: python --version
-      register: python_version
-    - debug:
-        msg: "Running python {{ python_version.stdout }}"
+- name: Make sure Ansible is installed
+  import_tasks: ansible.yml
 
-- name: Fail if python is not 3.7
-  fail:
-    msg: "Python 3.7 is required. Currently in use: {{ python_version.stdout }}"
-  when: python_version.stdout != "Python 3.7.0"
-    
-- name: Install ansible dependencies
-  pip:
-    name: "{{ item }}"
-  with_items:
-    - ansible
+- name: Configure host information
+  import_tasks: hosts.yml
+
+- name: Configure bastion connection
+  import_tasks: bastion.yml
 
   
