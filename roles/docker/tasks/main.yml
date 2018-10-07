@@ -60,8 +60,12 @@
     src: "{{ item }}"
     dest: "/etc/docker/{{ item }}"
   with_items:
-    - docker.json
+    - daemon.json
   notify:
-    - restart docker
+    - "restart docker"
+
+# - debug: msg="trigger nginx-restart"
+#   notify: restart docker
+#   changed_when: true
 
 
