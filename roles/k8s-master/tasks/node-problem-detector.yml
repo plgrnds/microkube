@@ -1,0 +1,9 @@
+---
+- name: Node problem detector addon
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "{{ k8s_addons_dir }}/{{ item }}"
+  with_items:
+    - node-problem-detector.yaml
+  

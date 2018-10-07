@@ -1,10 +1,7 @@
 ---
-# This playbook contains common plays that will be run on all nodes.
+- name: Setup k8s user {{ k8user }}
+  import_tasks: user.yml
 
-- name: Setup {{ k8user }}
-  import_tasks: users.yml
-
-- name: Install Kubernetes
+- name: Install k8s
   import_tasks: kubernetes.yml
-  become: yes
 

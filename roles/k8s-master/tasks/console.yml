@@ -22,5 +22,5 @@
         creates: kubecfg.p12
     - fetch:
         src: $HOME/kubecfg.p12
-        dest: artifacts/kubecfg.p12
+        dest: ../../artifacts/kubecfg.p12
         flat: yes

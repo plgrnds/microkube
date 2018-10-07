@@ -19,5 +19,5 @@
   become: false
   template:
     src: ssh.conf
-    dest: "{{ playbook_dir }}/ssh.conf"
+    dest: "{{ playbook_dir }}/../../ssh.conf"
   when: has_bastion

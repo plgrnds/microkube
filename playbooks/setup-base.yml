@@ -1,8 +1,8 @@
 ---
 - import_playbook: localhost/setup.yml
 - import_playbook: toolchain/setup.yml
+- import_playbook: cluster/docker.yml
 - import_playbook: cluster/node.yml
 - import_playbook: cluster/master.yml
 - import_playbook: cluster/minion.yml
-- import_playbook: cluster/cni.yml
 - import_playbook: cluster/helm.yml

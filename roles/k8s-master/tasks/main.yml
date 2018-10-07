@@ -2,15 +2,18 @@
 - name: Set up the cluster
   import_tasks: cluster.yml
 
-- name: Setup kubernetes client
-  import_tasks: client.yml
-
 - name: Setup container networking
   import_tasks: networking.yml
   tags: networking
+
+- name: Setup roles
+  import_tasks: roles.yml
 
 - name: Setup kubernetes console
   import_tasks: console.yml
 
 - name: Create admin user
   import_tasks: admin-user.yml
+
+- name: Node problem detector
+  import_tasks: node-problem-detector.yml

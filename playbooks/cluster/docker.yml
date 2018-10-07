@@ -1,0 +1,6 @@
+---
+- hosts: k8s-cluster
+  gather_facts: False
+  become: yes
+  roles:
+  - docker

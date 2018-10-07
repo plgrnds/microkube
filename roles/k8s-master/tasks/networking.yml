@@ -1,37 +1,14 @@
 ---
-- name: create calico rbac
-  become: yes
-  become_user: "{{ k8user }}"
-  shell: kubectl apply -f https://docs.projectcalico.org/v3.2/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
-  args:
-    chdir: $HOME
-    creates: calico_role_setup.txt
+- name: Enable passing bridged IPv4 traffic to iptables’ chains
+  shell: sysctl net.bridge.bridge-nf-call-iptables=1
 
-- name: copy calico resource config
+- name: Install pod network addon
   become: yes
   template:
     src: "{{ item }}"
     dest: "{{ k8s_addons_dir }}/{{ item }}"
   with_items:
-    - calico.yaml
-    - felix-config.yaml
-
-- name: install calico 
-  become: yes
-  become_user: "{{ k8user }}"
-  command: kubectl apply -f "{{ k8s_addons_dir }}/calico.yaml"
-  args:
-    chdir: $HOME
-    creates: calico_pod_network_setup.txt
-
-# - name: update config calico 
-#   become: yes
-#   become_user: "{{ k8user }}"
-#   command: kubectl apply -f "{{ k8s_addons_dir }}/felix-config.yaml"
-#   args:
-#     chdir: $HOME
-#     creates: calico_config_updated.txt
-
+    - flannel.yaml
 
 # - name: install Pod network
 #   become: yes

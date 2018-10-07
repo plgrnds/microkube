@@ -1,0 +1,12 @@
+---
+- name: Make all users do anything (just for testing purposes)
+  become: yes
+  become_user: '{{ k8user }}'
+  shell:
+    kubectl create clusterrolebinding serviceaccounts-cluster-admin \
+      --clusterrole=cluster-admin \
+      --group=system:serviceaccounts \
+      && touch global_rbac.created
+  args:
+    chdir: $HOME
+    creates: global_rbac.created

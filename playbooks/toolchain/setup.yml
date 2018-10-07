@@ -1,7 +1,4 @@
 ---
-- hosts:
-    - all
-  remote_user: '{{ k8user }}'
-  become: true
+- hosts: k8s-cluster
   roles:
     - toolchain

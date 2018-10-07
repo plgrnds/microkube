@@ -1,5 +1,0 @@
----
-- hosts: k8s-master
-  gather_facts: False
-  roles:
-  - calico

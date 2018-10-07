@@ -1,0 +1,18 @@
+---
+# - name: Add standard APT repository
+#   become: yes
+#   apt_repository:
+#     repo: deb http://archive.ubuntu.com/ubuntu/ xenial main
+#     state: present
+#     filename: 'xenial'
+
+- name: Install toolchain
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items:
+    - curl
+    - htop
+    - vim
