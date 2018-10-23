@@ -12,6 +12,8 @@
 - name: obtain client certificate for accessing console
   become: yes
   become_user: "{{ k8user }}"
+  tags:
+    - login
   block:
     - shell: 
         grep 'client-certificate-data' $HOME/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.crt &&

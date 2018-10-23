@@ -32,3 +32,4 @@
   command: helm init --service-account tiller --upgrade
   args:
     creates: $HOME/.helm
+
