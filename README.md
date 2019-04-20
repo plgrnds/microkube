@@ -41,7 +41,19 @@ Then login to a box with port forwarding enabled (3000:localhost:3000) and issue
 kubectl port-forward $(kubectl get  pods --selector=app=kube-prometheus-grafana -n  monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring  3000
 ```
 
+## Spark
+
+```bash
+helm install --name spark stable/spark --set Worker.Cpu=1000m --set Worker.Memory=6G --set Worker.CpuTargetPercentage=100 --set Worker.DaemonMemory=6G --set Worker.ExecutorMemory=6G --set Worker.Replicas=6
+```
+
+```bash
+helm install incubator/sparkoperator --namespace spark-operator --set createSparkJobNamespace=true --set sparkJobNamespace=test-ns
+```
+
 ## Useful resources
 * [Kubernetes Cheatsheet](https://github.com/dennyzhang/cheatsheet-kubernetes-A4)
 * [Kubernetes Resource Templates](https://cheatsheet.dennyzhang.com/cheatsheet-kubernetes-yaml)
 * [Flannel network modes](https://github.com/coreos/flannel/blob/master/Documentation/backends.md)
+* [Spark K8S Operator](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/quick-start-guide.md)
+* [Spark Manual Setup](https://github.com/kubernetes/examples/tree/master/staging/spark)

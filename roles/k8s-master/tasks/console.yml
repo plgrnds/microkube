@@ -4,7 +4,7 @@
 - name: create kubernetes console
   become: yes
   become_user: "{{ k8user }}"
-  shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+  shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
   args:
     chdir: $HOME
     creates: console_initialized.txt

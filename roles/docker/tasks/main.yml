@@ -54,15 +54,6 @@
     state: present
     update_cache: true
 
-- name: Ensure docker MTU on bridge0 matches eth0 interface MTU
-  become: yes
-  template:
-    src: "{{ item }}"
-    dest: "/etc/docker/{{ item }}"
-  with_items:
-    - daemon.json
-  notify:
-    - "restart docker"
 
 # - debug: msg="trigger nginx-restart"
 #   notify: restart docker

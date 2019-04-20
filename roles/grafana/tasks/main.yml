@@ -15,7 +15,7 @@
     chdir: $HOME
     creates: grafana.prometheus.installed
 
-- name: Set global rbac
+- name: Install kube prometheus
   become: yes
   become_user: "{{ k8user }}"
   shell: helm install coreos/kube-prometheus --name kube-prometheus --set global.rbacEnable=true --namespace monitoring > grafana.rbac.set

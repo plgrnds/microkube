@@ -32,7 +32,7 @@
     state: present
     update_cache: true
   with_items:
-    - kubelet
-    - kubeadm
-    - kubectl
+    - kubelet={{k8s_version}}
+    - kubeadm={{k8s_version}}
+    - kubectl={{k8s_version}}
 

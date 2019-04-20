@@ -1,5 +1,6 @@
 k8user: kube
 k8admin: kbhit
+k8s_version: 1.13.1-00
 helm_home: /opt/helm
 helm_archive: https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
 k8s_conf_dir: /etc/kubernetes

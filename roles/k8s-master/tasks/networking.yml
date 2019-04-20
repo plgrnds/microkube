@@ -13,7 +13,7 @@
 - name: install Pod network
   become: yes
   become_user: '{{ k8user }}'
-  shell: kubectl apply -f {{ k8s_addons_dir }}/flannel.yml >> pod_network.setup
+  shell: kubectl apply -f {{ k8s_addons_dir }}/flannel.yaml >> pod_network.setup
   args:
     chdir: $HOME
     creates: pod_network.setup
